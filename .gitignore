@@ -205,3 +205,26 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Dataset files (too large for Git)
+dataset/real/
+dataset/synthetic/
+*.wav
+*.mp3
+*.flac
+*.ogg
+
+# Keep metadata
+!dataset/metadata.csv
+
+# Features (large files)
+features/*.pkl
+features/*.h5
+
+# Models
+models/*.pkl
+
+# Python
+__pycache__/
+*.pyc
+.env
