@@ -207,12 +207,7 @@ marimo/_lsp/
 __marimo__/
 
 # Dataset files (too large for Git)
-dataset/real/
-dataset/synthetic/
-*.wav
-*.mp3
-*.flac
-*.ogg
+dataset/
 
 # Keep metadata
 !dataset/metadata.csv
@@ -228,3 +223,6 @@ models/*.pkl
 __pycache__/
 *.pyc
 .env
+Google-credentials.json
+*.json
+.DS_Store
