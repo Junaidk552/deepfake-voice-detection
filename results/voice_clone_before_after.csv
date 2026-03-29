@@ -1,0 +1,15 @@
+config,version,accuracy,f1,real_correct,fake_correct
+MFCC only,before,0.98,0.9795918367346939,25,24
+MFCC only,after,0.9,0.8888888888888888,25,20
+CQCC only,before,0.72,0.6111111111111112,25,11
+CQCC only,after,0.52,0.07692307692307693,25,1
+RQA only,before,0.44,0.0,22,0
+RQA only,after,0.5,0.0,25,0
+Pauses only,before,0.68,0.7333333333333333,12,22
+Pauses only,after,0.78,0.8,17,22
+MFCC+CQCC,before,0.98,0.9795918367346939,25,24
+MFCC+CQCC,after,0.86,0.8372093023255814,25,18
+Novel only,before,0.52,0.07692307692307693,25,1
+Novel only,after,0.52,0.07692307692307693,25,1
+All features,before,0.5,0.647887323943662,2,23
+All features,after,0.64,0.4375,25,7

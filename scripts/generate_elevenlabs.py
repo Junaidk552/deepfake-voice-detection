@@ -6,10 +6,8 @@ import numpy as np
 from elevenlabs import ElevenLabs
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
 load_dotenv()
 
-# Get API key
 API_KEY = os.getenv("ELEVENLABS_API_KEY")
 if not API_KEY:
     raise ValueError("ELEVENLABS_API_KEY not found in .env file!")
@@ -19,14 +17,12 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 client = ElevenLabs(api_key=API_KEY)
 
-# Load prompts
 with open("scripts/prompts.json") as f:
     prompts = json.load(f)
 
-# Use ONLY the first 150 prompts (prompts 1-150 of the Harvard sentences)
+# first 150 prompts only
 prompts = prompts[:150]
 
-# Available voices on free tier
 voices = [
     {"id": "21m00Tcm4TlvDq8ikWAM", "name": "Rachel"},
     {"id": "AZnzlk1XvdvUeBnXmlld", "name": "Domi"},
@@ -37,56 +33,47 @@ voices = [
     {"id": "pNInz6obpgDQGcFmaJgB", "name": "Adam"},
 ]
 
-# Track usage - 10,000 characters/month for free tier
 count = 0
 char_count = 0
-MAX_CHARS = 9000  # Leave buffer
+MAX_CHARS = 9000  # free tier limit with buffer
 
 print(f"Starting ElevenLabs TTS generation...")
 print(f"Target: {len(prompts)} samples")
 print(f"Character limit: {MAX_CHARS}\n")
 
 for i, prompt in enumerate(prompts):
-    # Check character limit
     if char_count + len(prompt) > MAX_CHARS:
-        print(f"\n WARNING!  Approaching character limit ({char_count} chars used). Stopping.")
+        print(f"\nApproaching character limit ({char_count} chars used). Stopping.")
         break
-    
-    # Cycle through voices
+
     voice = voices[i % len(voices)]
-    
+
     try:
-        # Generate audio
         audio = client.text_to_speech.convert(
             voice_id=voice["id"],
             text=prompt,
             model_id="eleven_turbo_v2_5",
             output_format="pcm_16000",
         )
-        
-        # Convert to numpy array
+
         audio_bytes = b"".join(audio)
         audio_array = np.frombuffer(audio_bytes, dtype=np.int16).astype(np.float32) / 32768.0
-        
-        # Save file
+
         output_name = f"elevenlabs_{count+1:04d}.wav"
         sf.write(os.path.join(OUTPUT_DIR, output_name), audio_array, 16000)
-        
-        # Update counters
+
         char_count += len(prompt)
         count += 1
-        
-        # Progress update
+
         if count % 10 == 0:
-            print(f"✓ Generated {count}/{len(prompts)} samples ({char_count} chars used)")
-        
+            print(f"Generated {count}/{len(prompts)} samples ({char_count} chars used)")
+
     except Exception as e:
-        print(f"❌ Error on sample {i+1}: {e}")
+        print(f"Error on sample {i+1}: {e}")
         continue
 
-print(f"\n{'='*60}")
-print(f"✓ ElevenLabs generation complete!")
+# print(f'voices used: {[voices[i % len(voices)]["name"] for i in range(count)]}')
+print(f"\nElevenLabs generation complete!")
 print(f"  Samples generated: {count}")
 print(f"  Characters used: {char_count}/{MAX_CHARS}")
 print(f"  Output: {OUTPUT_DIR}/")
-print(f"{'='*60}")

@@ -2,7 +2,7 @@ import os
 import librosa
 from pathlib import Path
 
-REAL_DIR = "dataset/real/librispeech"
+REAL_DIR = "dataset/real/"
 
 total = 0
 issues = []
@@ -15,7 +15,6 @@ files = list(Path(REAL_DIR).glob("*.wav"))
 print(f"LibriSpeech samples: {len(files)} files")
 total = len(files)
 
-# Spot-check 10 random samples
 import random
 random.seed(42)
 sample_files = random.sample(files, min(10, len(files)))
@@ -28,10 +27,9 @@ for f in sample_files:
     if duration < 3.0 or duration > 10.0:
         issues.append(f"{f.name}: duration {duration:.1f}s out of range")
 
-print(f"\n{'='*50}")
-print(f"Total real samples: {total}")
+print(f"\nTotal real samples: {total}")
 print(f"Target: 500")
-print(f"Status: {'✓ PASS' if total >= 400 else '✗ FAIL - need at least 400'}")
+print(f"Status: {'PASS' if total >= 400 else 'FAIL - need at least 400'}")
 print(f"Issues found: {len(issues)}")
 for issue in issues:
     print(f"  - {issue}")
