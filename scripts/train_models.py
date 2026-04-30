@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-"""train models on different feature combos and compare"""
 
 import pandas as pd
 import numpy as np
@@ -29,7 +28,7 @@ def main():
     print("Loading features...")
     df = pd.read_pickle('features/all_features_combined.pkl')
 
-    # 0 = real, 1 = synthetic
+    # Kept labels binary (real=0, synthetic=1) so metrics like AUC/EER map directly.
     df['binary_label'] = df['label'].apply(lambda x: 0 if x == 'real' else 1)
 
     feature_groups = {
@@ -56,7 +55,8 @@ def main():
                 if c not in ['filename', 'label', 'binary_label']]]
     y = df['binary_label']
 
-    # 80/20 split, stratified
+    # Fixed seed so every rerun gives the same split and model ranking while I was iterating.
+    # 80/20 + stratify kept class balance stable in both train/test.
     X_train_full, X_test_full, y_train, y_test = train_test_split(
         X_all, y, test_size=0.2, random_state=42, stratify=y
     )
@@ -72,6 +72,10 @@ def main():
             'y_train': y_train, 'y_test': y_test
         }, f)
 
+    # I used 3 classifiers on purpose:
+    # - Logistic Regression as a simple linear baseline
+    # - SVM for stronger non-linear boundaries on spectral features
+    # - Random Forest to capture interactions without feature engineering
     classifiers = {
         'Logistic Regression': {
             'model': LogisticRegression(max_iter=1000, random_state=42),
@@ -114,6 +118,8 @@ def main():
             print(f"\n[{count}/{total}] {config_name} + {clf_name} "
                   f"({len(feature_cols)} features)")
 
+            # 5-fold CV was the best tradeoff here: less noisy than 3-fold, much cheaper than 10-fold.
+            # I tuned for F1 because class-level mistakes mattered more than raw accuracy.
             grid = GridSearchCV(
                 clf_info['model'], clf_info['params'],
                 cv=5, scoring='f1', n_jobs=-1, refit=True
@@ -165,6 +171,7 @@ def main():
     res_df.to_csv('results/model_comparison.csv', index=False)
     print("\nSaved results/model_comparison.csv")
 
+    # Save the single best model bundle separately so inference scripts don't need to re-rank anything.
     with open('models/best_model.pkl', 'wb') as f:
         pickle.dump(best_info, f)
     print(f"Saved models/best_model.pkl ({best_name})")

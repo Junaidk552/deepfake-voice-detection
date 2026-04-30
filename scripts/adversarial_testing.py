@@ -1,5 +1,3 @@
-"""adversarial robustness testing - gaussian noise, mp3, pitch shift, bg noise"""
-
 import pandas as pd
 import numpy as np
 import pickle
@@ -137,7 +135,8 @@ def main():
         model.fit(X_tr, y_train)
         trained[config_name] = {'model': model, 'scaler': scaler, 'cols': cols}
 
-    # RQA is slow so limit to 50 samples
+    # Kept this to 50 files because RQA extraction is the bottleneck here,
+    # especially once each file is attacked multiple ways.
     np.random.seed(42)
     if len(test_files) > 50:
         subset_idx = np.random.choice(len(test_files), 50, replace=False)

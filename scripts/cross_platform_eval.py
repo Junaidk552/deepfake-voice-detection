@@ -1,8 +1,3 @@
-"""
-cross-platform generalisation test
-train on 2 TTS platforms, test on the held-out one
-"""
-
 import pandas as pd
 import numpy as np
 import pickle
@@ -53,7 +48,7 @@ def main():
                          feature_groups['pauses']),
     }
 
-    # SVM was the best performer overall
+    # Reuse the best model family from main training so this test isolates domain shift, not model choice.
     clf = SVC(kernel='rbf', C=10, gamma='scale',
               probability=True, random_state=42)
 
@@ -65,6 +60,9 @@ def main():
         print(f"Training on the other 2 platforms + real speech")
         print(f"Testing on {platform_name} + real speech")
 
+        # Leave-one-platform-out:
+        # train on real + two synthetic sources, then test on real + the unseen source.
+        # This is the closest check to "can it catch a spoofing system it never trained on?"
         train_platforms = [p for p in platforms if p != held_out]
 
         real_train = real_df.sample(frac=0.8, random_state=42)

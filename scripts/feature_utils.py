@@ -1,5 +1,3 @@
-"""shared feature extraction functions — used by all evaluation scripts"""
-
 import numpy as np
 import librosa
 from scipy.stats import skew, kurtosis
@@ -25,12 +23,14 @@ def extract_cqcc(y, sr=16000):
         cqcc_feat = spafe_cqcc(y, fs=sr, num_ceps=13)
         cqcc_mean = np.mean(cqcc_feat, axis=0)[:13]
         return {f'cqcc_{i}': cqcc_mean[i] for i in range(13)}
+    # spafe occasionally fails on very short clips, return zeros rather than crash
     except:
         return {f'cqcc_{i}': 0.0 for i in range(13)}
 
 
 def extract_rqa(y, sr=16000):
-    # downsample to ~2000 points, RQA is O(n^2)
+    # RQA blew up on full-length clips (O(n^2) distance matrix), so I cap to ~2000 points first.
+    # I tested bigger targets but runtime jumped a lot with barely any lift in validation accuracy.
     target = 2000
     step = max(1, len(y) // target)
     signal = y[::step][:target].astype(float)
@@ -68,10 +68,11 @@ def extract_rqa(y, sr=16000):
             'rqa_laminarity': result.laminarity,
             'rqa_trapping_time': result.trapping_time
         }
+    # fall through to numpy fallback below
     except:
         pass
 
-    # numpy fallback if pyrqa fails
+    # pyrqa occasionally crashed on some machines, so I kept this numpy fallback for reproducibility.
     embedded = np.array([signal[i:i + m * tau:tau] for i in range(N)])
     chunk = 500
     recurrence = np.zeros((N, N), dtype=bool)
@@ -87,7 +88,7 @@ def extract_rqa(y, sr=16000):
     rec_points = np.sum(recurrence)
     rr = rec_points / (N * N)
 
-    # diagonal lines
+    # diagonal lines capture repeating trajectories in the reconstructed phase space.
     dl = []
     for k in range(-N + 1, N):
         d = np.diagonal(recurrence, k)
@@ -110,7 +111,7 @@ def extract_rqa(y, sr=16000):
     else:
         det = ad = md = ed = 0
 
-    # vertical lines
+    # vertical lines track "stuck" regions, useful for laminarity/trapping-time.
     vl = []
     for col in range(N):
         l = 0
@@ -140,9 +141,11 @@ def extract_entropy(y, sr=16000):
         if scale == 1:
             coarse = y
         else:
+            # coarse graining for multiscale entropy: average non-overlapping windows.
             n = len(y) - (len(y) % scale)
             coarse = np.mean(y[:n].reshape(-1, scale), axis=1)
         try:
+            # I trim to first 3000 points to keep sample entropy stable and avoid very slow runs.
             se = sampen(coarse[:3000], emb_dim=2,
                        tolerance=0.2 * np.std(coarse))
             f[f'entropy_scale_{scale}'] = se
@@ -156,6 +159,7 @@ def extract_pauses(y, sr=16000):
     hop_length = int(0.010 * sr)
     rms = librosa.feature.rms(y=y, frame_length=frame_length,
                                hop_length=hop_length)[0]
+    # 20th percentile worked best after trial runs; fixed thresholds broke across loud vs quiet clips.
     threshold = np.percentile(rms, 20)
     is_silent = rms < threshold
 
@@ -168,6 +172,7 @@ def extract_pauses(y, sr=16000):
             in_pause = True
         elif not s and in_pause:
             dur = (i - start) * hop_length / sr
+            # Ignore micro-pauses from plosives/breath noise; they were adding false pause spikes.
             if dur >= 0.02:
                 pauses.append(dur)
             in_pause = False
@@ -198,7 +203,8 @@ def extract_pauses(y, sr=16000):
 
 
 def extract_all_features(filepath, sr=16000):
-    """load audio and extract all 77 features"""
+    # I cap clips at 10s so feature vectors are consistent and long files don't dominate runtime.
+    # Most spoof artifacts I cared about showed up early anyway.
     y, _ = librosa.load(filepath, sr=sr, duration=10)
     f = {}
     f.update(extract_mfcc(y, sr))
@@ -210,7 +216,8 @@ def extract_all_features(filepath, sr=16000):
 
 
 def extract_all_from_audio(y, sr=16000):
-    """extract all 77 features from already-loaded audio array"""
+    # Same feature stack as file-based path, just for preloaded arrays (e.g., augmentation/testing).
+    # TODO: add optional clipping here too so this path matches extract_all_features exactly.
     f = {}
     f.update(extract_mfcc(y, sr))
     f.update(extract_cqcc(y, sr))

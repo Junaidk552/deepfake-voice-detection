@@ -4,8 +4,8 @@ import soundfile as sf
 from pathlib import Path
 import random
 
-LIBRISPEECH_DIR = "/Users/junaidkhan/Downloads/LibriSpeech/dev-clean"
-# LIBRISPEECH_DIR = "C:/Users/YourName/Downloads/LibriSpeech/dev-clean"  # windows
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+LIBRISPEECH_DIR = PROJECT_ROOT / "data" / "LibriSpeech" / "dev-clean"
 
 OUTPUT_DIR = "dataset/real/librispeech"
 TARGET_COUNT = 500

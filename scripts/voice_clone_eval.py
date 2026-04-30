@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-"""extract features from voice clone samples, test with trained models"""
 
 import pandas as pd
 import numpy as np
@@ -77,6 +76,9 @@ print("\nVOICE CLONE DETECTION RESULTS (v2 - consistent extraction)")
 with open('data/train_test_splits.pkl', 'rb') as f:
     splits = pickle.load(f)
 
+# The train split here comes from the original Common Voice style benchmark.
+# Running clones against that same training setup gives a clear before/after check:
+# "works on generic real-vs-TTS" vs "still works on identity-mimicking clones".
 X_train_full = splits['X_train']
 y_train = splits['y_train']
 y_true = combined['binary_label'].values
