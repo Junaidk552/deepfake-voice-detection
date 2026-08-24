@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # AI Voice Deepfake Detection for Cyber Defence
 
 Undergraduate dissertation support repository by **Junaid Khan**  
