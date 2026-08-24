@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AI Voice Deepfake Detection for Cyber Defence
 
 Undergraduate dissertation support repository by **Junaid Khan**  
@@ -239,3 +240,4 @@ Audio data is **not redistributed** under this licence; original dataset and pro
 ## Acknowledgements
 
 This project was made possible by the open-source ecosystem, especially contributors to `librosa`, `spafe`, `nolds`, `PyRQA`, `scikit-learn`, `pandas`, `numpy`, `matplotlib`, and related scientific Python tooling used throughout this research pipeline.
+=======
