@@ -1,9 +1,21 @@
 #!/usr/bin/env python3
-"""compare before vs after adding common voice to training data"""
+"""
+voice_clone_before_after.py
+
+This script processes data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- features/voice_clone_features_v2.pkl
+- features/before_common_voice/all_features_combined.pkl
+- features/all_features_combined.pkl
+Outputs:
+- results/voice_clone_before_after.csv
+Reproduces: Table 4.4 (before/after Common Voice comparison).
+"""
 
 import pandas as pd
 import numpy as np
-import pickle
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, f1_score
@@ -21,7 +33,6 @@ new_features = pd.read_pickle('features/all_features_combined.pkl')
 new_features['binary_label'] = new_features['label'].apply(
     lambda x: 0 if x == 'real' else 1)
 
-# print(old_features.shape, new_features.shape)
 
 feature_groups = {
     'mfcc': [c for c in feature_cols if c.startswith('mfcc')],

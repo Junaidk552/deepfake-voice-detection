@@ -1,8 +1,20 @@
 #!/usr/bin/env python3
-"""random forest feature importance"""
+"""
+feature_importance.py
+
+This script processes data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- data/train_test_splits.pkl
+Outputs:
+- results/feature_importance.png
+- results/feature_importance_by_category.png
+- results/feature_importance_analysis.txt
+Reproduces: Figures 4.13 and 4.14.
+"""
 
 import pandas as pd
-import numpy as np
 import pickle
 import matplotlib.pyplot as plt
 from pathlib import Path
@@ -25,7 +37,6 @@ rf = RandomForestClassifier(n_estimators=200, max_depth=10, random_state=42)
 rf.fit(X_scaled, y_train)
 
 importances = rf.feature_importances_
-# print(f'sum of importances: {importances.sum():.4f}')
 
 imp_df = pd.DataFrame({
     'feature': feature_cols,

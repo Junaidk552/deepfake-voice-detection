@@ -1,5 +1,18 @@
 #!/usr/bin/env python3
+"""
+train_models.py
 
+This script evaluates data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- features/all_features_combined.pkl
+Outputs:
+- data/train_test_splits.pkl
+- results/model_comparison.csv
+- models/best_model.pkl
+Reproduces: Table 4.1 (primary model benchmark).
+"""
 import pandas as pd
 import numpy as np
 import pickle

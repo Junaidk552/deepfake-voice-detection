@@ -1,4 +1,15 @@
-"""scripts/create_metadata.py - Create master dataset tracking CSV"""
+"""
+create_metadata.py
+
+This script processes data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- *.wav
+Outputs:
+- dataset/metadata.csv
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 import os
 import csv
 import librosa
@@ -64,7 +75,6 @@ with open("dataset/metadata.csv", "w", newline="") as f:
 real_count = sum(1 for m in metadata if m["label"] == "real")
 synth_count = sum(1 for m in metadata if m["label"] == "synthetic")
 avg_duration = sum(m["duration"] for m in metadata) / len(metadata)
-# print(f'total entries: {len(metadata)}')
 
 print(f"\nDataset Summary:")
 print(f"  Real samples:      {real_count}")

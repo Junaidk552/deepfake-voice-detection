@@ -1,3 +1,18 @@
+"""
+adversarial_testing.py
+
+This script evaluates data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- features/all_features_combined.pkl
+- data/train_test_splits.pkl
+- dataset/real/*.wav
+- dataset/synthetic/*/*.wav
+Outputs:
+- results/adversarial_results.csv
+Reproduces: Table 4.5 and Figures 4.6, 4.7, 4.8, 4.9 (via downstream plotting).
+"""
 import pandas as pd
 import numpy as np
 import pickle

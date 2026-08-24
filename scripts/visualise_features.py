@@ -1,3 +1,16 @@
+"""
+visualise_features.py
+
+This script visualises data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- features/cqcc_features.pkl
+- features/mfcc_features.pkl
+Outputs:
+- [None detected: script may print/report only or be imported by other scripts.]
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -193,7 +206,6 @@ def print_statistics(mfcc_df, cqcc_df):
         synthetic = cqcc_df[~cqcc_df['is_real']][feature]
 
         t_stat, p_value = stats.ttest_ind(real, synthetic)
-        # print(f't={t_stat:.3f}')
 
         significance = "SIGNIFICANT" if p_value < 0.05 else "Not significant"
         print(f"   {feature.upper()}: p-value = {p_value:.6f} -- {significance}")

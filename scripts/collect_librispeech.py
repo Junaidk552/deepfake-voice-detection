@@ -1,3 +1,14 @@
+"""
+collect_librispeech.py
+
+This script processes data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- *.flac
+
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 import os
 import librosa
 import soundfile as sf

@@ -1,4 +1,22 @@
-"""generate evaluation plots - confusion matrix, ROC, per-platform, model comparison"""
+"""
+evaluation_plots.py
+
+This script visualises data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- data/train_test_splits.pkl
+- features/all_features_combined.pkl
+- results/model_comparison.csv
+- results/cross_platform_results.csv
+Outputs:
+- results/confusion_matrix.png
+- results/roc_curves.png
+- results/per_platform_performance.png
+- results/model_comparison_chart.png
+- results/cross_platform_comparison.png
+Reproduces: Figures 4.1, 4.2, 4.3, 4.4, 4.5.
+"""
 
 import pandas as pd
 import numpy as np
@@ -122,7 +140,6 @@ print("  Saved results/per_platform_performance.png")
 print("Plot 4: Model Comparison Chart...")
 
 results = pd.read_csv('results/model_comparison.csv')
-# print(results.head())
 
 fig, ax = plt.subplots(figsize=(14, 7))
 

@@ -1,3 +1,15 @@
+"""
+feature_validation_report.py
+
+This script processes data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- features/all_features_combined.pkl
+Outputs:
+- results/feature_validation_report.txt
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 import pandas as pd
 import numpy as np
 from scipy import stats
@@ -46,7 +58,6 @@ for col in feature_cols:
     })
 
 res_df = pd.DataFrame(results)
-# print(res_df.head())
 
 Path('results').mkdir(parents=True, exist_ok=True)
 report_path = 'results/feature_validation_report.txt'

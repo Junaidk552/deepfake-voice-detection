@@ -1,5 +1,19 @@
 #!/usr/bin/env python3
-"""repeated noise trials for confidence intervals"""
+"""
+adversarial_noise_repeat.py
+
+This script processes data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- features/all_features_combined.pkl
+- data/train_test_splits.pkl
+- dataset/real/*.wav
+- dataset/synthetic/*/*.wav
+Outputs:
+- results/adversarial_noise_repeated.csv
+Reproduces: Table 4.6 (repeated adversarial-noise robustness statistics).
+"""
 
 import pandas as pd
 import numpy as np
@@ -63,7 +77,6 @@ def main():
     idx = np.random.choice(len(all_files), min(50, len(all_files)), replace=False)
     files = all_files[idx]
     labels = all_labels[idx]
-    # print(f'test subset size: {len(files)}')
 
     feature_cols = list(X_train.columns)
     mfcc_cols = [c for c in feature_cols if c.startswith('mfcc')]

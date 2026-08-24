@@ -1,4 +1,15 @@
-"""Fix Polly PCM files by adding WAV headers"""
+"""
+fix_polly_wavs.py
+
+This script processes data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- [None detected: script may rely on in-memory data or CLI/runtime context.]
+Outputs:
+- [None detected: script may print/report only or be imported by other scripts.]
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 import os
 import wave
 import numpy as np

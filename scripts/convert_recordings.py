@@ -1,5 +1,16 @@
 #!/usr/bin/env python3
-"""convert iPhone m4a recordings to 16kHz WAV"""
+"""
+convert_recordings.py
+
+This script processes data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- [None detected: script may rely on in-memory data or CLI/runtime context.]
+Outputs:
+- [None detected: script may print/report only or be imported by other scripts.]
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 
 import librosa
 import soundfile as sf
@@ -20,5 +31,4 @@ for i in range(70, 95):
     count += 1
     print(f"  {input_path.name} -> {output_path.name} ({len(y)/16000:.1f}s)")
 
-# print(f'expected ~25 files, got {count}')
 print(f"\nConverted {count} files to 16kHz WAV")

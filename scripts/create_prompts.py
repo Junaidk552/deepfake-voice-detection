@@ -1,4 +1,15 @@
-"""scripts/create_prompts.py - Parse Harvard Sentences for TTS"""
+"""
+create_prompts.py
+
+This script processes data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- scripts/harvard_sentences.txt
+Outputs:
+- prompts.json
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 import json
 import re
 

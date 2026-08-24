@@ -1,3 +1,15 @@
+"""
+feature_utils.py
+
+Defines reusable feature-extraction helpers for MFCC, CQCC, RQA, multiscale entropy, and pause-pattern statistics.
+Other scripts import these functions to keep extraction logic consistent between training and evaluation pipelines.
+
+Inputs:
+- Audio arrays provided by caller scripts (in-memory).
+Outputs:
+- No direct files written (returns feature dictionaries to caller scripts).
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 import numpy as np
 import librosa
 from scipy.stats import skew, kurtosis
@@ -217,7 +229,6 @@ def extract_all_features(filepath, sr=16000):
 
 def extract_all_from_audio(y, sr=16000):
     # Same feature stack as file-based path, just for preloaded arrays (e.g., augmentation/testing).
-    # TODO: add optional clipping here too so this path matches extract_all_features exactly.
     f = {}
     f.update(extract_mfcc(y, sr))
     f.update(extract_cqcc(y, sr))

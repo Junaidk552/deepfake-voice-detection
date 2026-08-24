@@ -1,4 +1,14 @@
-"""scripts/generate_google_tts.py - Generate 175 TTS samples from Google Cloud"""
+"""
+generate_google_tts.py
+
+This script generates data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- scripts/prompts.json
+
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 import os
 import json
 from google.cloud import texttospeech

@@ -1,4 +1,16 @@
-"""balance real dataset to 250 librispeech + 250 common voice"""
+"""
+balance_real_dataset.py
+
+This script processes data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- real_commonvoice_*.wav
+- real_librispeech_*.wav
+Outputs:
+- [None detected: script may print/report only or be imported by other scripts.]
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 
 import random
 import shutil
@@ -25,7 +37,6 @@ for i, f in enumerate(libri_files):
         moved += 1
 
 remaining_libri = len(list(real_dir.glob('real_librispeech_*.wav')))
-# print(f'kept indices: {sorted(keep)[:5]}')
 print(f"\nMoved {moved} LibriSpeech to backup")
 print(f"Remaining LibriSpeech: {remaining_libri}")
 print(f"Common Voice: {len(cv_files)}")

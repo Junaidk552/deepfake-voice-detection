@@ -1,4 +1,18 @@
-"""plot adversarial robustness results"""
+"""
+adversarial_plots.py
+
+This script visualises data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- results/adversarial_results.csv
+Outputs:
+- results/adversarial_accuracy.png
+- results/adversarial_degradation.png
+- results/adversarial_snr_curve.png
+- results/adversarial_heatmap.png
+Reproduces: Figures 4.6, 4.7, 4.8, 4.9.
+"""
 
 import pandas as pd
 import numpy as np

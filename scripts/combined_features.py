@@ -1,5 +1,20 @@
+"""
+combined_features.py
+
+This script processes data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- features/mfcc_features.pkl
+- features/cqcc_features.pkl
+- features/rqa_features.pkl
+- features/entropy_features.pkl
+- features/pause_features.pkl
+Outputs:
+- features/all_features_combined.pkl
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 import pandas as pd
-import numpy as np
 from pathlib import Path
 
 
@@ -71,7 +86,6 @@ def combine_features():
 
     print(f"\nLabel distribution:")
     print(df2['label'].value_counts().to_string())
-    # print(df2.head())
 
     output_path = Path('features/all_features_combined.pkl')
     output_path.parent.mkdir(parents=True, exist_ok=True)

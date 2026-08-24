@@ -1,3 +1,15 @@
+"""
+extract_mfcc.py
+
+This script extracts data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- *.wav
+Outputs:
+- features/mfcc_features.pkl
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 import librosa
 import numpy as np
 import pandas as pd
@@ -108,6 +120,5 @@ if __name__ == "__main__":
     print("MFCC Feature Extraction - Deepfake Voice Detection\n")
 
     df = process_dataset(dataset_dir, output_file)
-    # print(df.head())
 
     print("\nMFCC extraction complete!")

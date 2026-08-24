@@ -1,13 +1,21 @@
+"""
+cross_platform_eval.py
+
+This script evaluates data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- features/all_features_combined.pkl
+Outputs:
+- results/cross_platform_results.csv
+Reproduces: Table 4.2 (cross-platform generalisation benchmark).
+"""
 import pandas as pd
 import numpy as np
-import pickle
 from pathlib import Path
 from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import (accuracy_score, precision_score, recall_score,
-                             f1_score, roc_auc_score, roc_curve)
+from sklearn.metrics import (accuracy_score, f1_score, roc_auc_score, roc_curve)
 
 
 def calculate_eer(y_true, y_scores):

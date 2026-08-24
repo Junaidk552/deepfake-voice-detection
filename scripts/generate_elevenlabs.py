@@ -1,4 +1,15 @@
-"""scripts/generate_elevenlabs.py - Generate ~70 TTS samples from ElevenLabs"""
+"""
+generate_elevenlabs.py
+
+This script generates data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- scripts/prompts.json
+Outputs:
+- [None detected: script may print/report only or be imported by other scripts.]
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 import os
 import json
 import soundfile as sf
@@ -72,7 +83,6 @@ for i, prompt in enumerate(prompts):
         print(f"Error on sample {i+1}: {e}")
         continue
 
-# print(f'voices used: {[voices[i % len(voices)]["name"] for i in range(count)]}')
 print(f"\nElevenLabs generation complete!")
 print(f"  Samples generated: {count}")
 print(f"  Characters used: {char_count}/{MAX_CHARS}")

@@ -1,15 +1,26 @@
 #!/usr/bin/env python3
+"""
+voice_clone_eval.py
 
+This script evaluates data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- dataset/voice_clone/real/*.wav
+- dataset/voice_clone/synthetic/*.wav
+- data/train_test_splits.pkl
+Outputs:
+- features/voice_clone_features_v2.pkl
+- results/voice_clone_results.csv
+Reproduces: Table 4.3 (voice-clone detection benchmark).
+"""
 import pandas as pd
 import numpy as np
 import pickle
-import subprocess
 import sys
 from pathlib import Path
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
-from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, f1_score
 
 import sys, os

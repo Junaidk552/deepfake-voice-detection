@@ -1,4 +1,15 @@
-"""scripts/generate_polly_tts.py - Generate 175 TTS samples from Amazon Polly"""
+"""
+generate_polly_tts.py
+
+This script generates data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- scripts/prompts.json
+Outputs:
+- [None detected: script may print/report only or be imported by other scripts.]
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 import os
 import json
 import boto3

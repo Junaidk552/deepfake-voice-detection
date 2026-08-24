@@ -1,3 +1,15 @@
+"""
+plot_entropy_distributions.py
+
+This script visualises data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- features/entropy_features.pkl
+Outputs:
+- results/entropy_distributions.png
+Reproduces: Figure 4.11.
+"""
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt

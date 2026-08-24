@@ -1,3 +1,15 @@
+"""
+plot_pause_distributions.py
+
+This script visualises data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- features/pause_features.pkl
+Outputs:
+- results/pause_distributions.png
+Reproduces: Figure 4.12.
+"""
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt

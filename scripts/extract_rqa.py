@@ -1,3 +1,15 @@
+"""
+extract_rqa.py
+
+This script extracts data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- *.wav
+Outputs:
+- features/rqa_features.pkl
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 import librosa
 import numpy as np
 import pandas as pd

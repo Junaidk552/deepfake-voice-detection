@@ -1,12 +1,23 @@
-"""select ~250 diverse clips from common voice and convert to 16kHz WAV"""
+"""
+select_common_voice.py
+
+This script processes data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- [None detected: script may rely on in-memory data or CLI/runtime context.]
+Outputs:
+- [None detected: script may print/report only or be imported by other scripts.]
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 
 import pandas as pd
 import librosa
 import soundfile as sf
 from pathlib import Path
-import shutil
 
-CV_DIR = Path.home() / 'downloads' / 'archive'
+DATA_DIR = Path(__file__).resolve().parent.parent / 'data' / 'common_voice'
+CV_DIR = DATA_DIR
 OUTPUT_DIR = Path('dataset/real/common_voice')
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -83,7 +94,6 @@ for i, (_, row) in enumerate(selected_df.iterrows()):
         errors += 1
         continue
 
-# print(f'final count: {count}')
 print(f"\nDone! {count} clips saved to {OUTPUT_DIR}")
 if errors > 0:
     print(f"({errors} files skipped due to errors)")

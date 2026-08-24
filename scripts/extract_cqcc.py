@@ -1,3 +1,15 @@
+"""
+extract_cqcc.py
+
+This script extracts data for the deepfake voice detection pipeline and dissertation experiments.
+It is designed to run from the project root so file paths resolve consistently across dataset, features, and results directories.
+
+Inputs:
+- *.wav
+Outputs:
+- features/cqcc_features.pkl
+Reproduces: Reproduces intermediate outputs used by other scripts.
+"""
 import librosa
 import numpy as np
 import pandas as pd
@@ -73,7 +85,6 @@ def process_dataset(dataset_dir, output_file):
             valid_labels.append(label)
 
     print(f"\nSuccessfully processed {len(feature_list)}/{total} files")
-    # print(f'failed: {total - len(feature_list)}')
 
     feature_array = np.array(feature_list)
 
